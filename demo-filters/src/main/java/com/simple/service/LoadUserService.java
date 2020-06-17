@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 public class LoadUserService implements UserDetailsService {
     @Autowired
     PasswordEncoder passwordEncoder;
-    @Resource
+    @Autowired
     PersonRepository personRepository;
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {

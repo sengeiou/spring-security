@@ -3,6 +3,7 @@ package com.simple.controller;
 import com.simple.dao.PersonRepository;
 import com.simple.pojo.Person;
 import com.simple.util.EmailUtil;
+import com.simple.util.Jwtutil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
@@ -37,6 +38,7 @@ public class IndexController {
     PersonRepository personRepository;
     @Autowired
     EmailUtil emailUtil;
+
     /**
      * @exception:
      * @DESP: 未登录
@@ -60,8 +62,10 @@ public class IndexController {
         Map<String, Object> map = new HashMap<>();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
+        Person person = personRepository.findPersonByEmail(email);
+        String token = Jwtutil.getJwt(person.getId(), email);
         List<GrantedAuthority> list = (List<GrantedAuthority>) authentication.getAuthorities();
-        map.put("email", email);
+        map.put("token", token);
         map.put("role", list);
         map.put("uri", request.getRequestURI());
         return map;
@@ -152,7 +156,7 @@ public class IndexController {
 
     /**
      * @exception:
-     * @DESP: 注册
+     * @DESP: 发送邮件
      * @Date: 2020/6/16 cai
      */
     @RequestMapping("/open/sendEmail")
@@ -167,7 +171,7 @@ public class IndexController {
 
     /**
      * @exception:
-     * @DESP: 发送邮件
+     * @DESP: 注册
      * @Date: 2020/6/16 cai
      */
     @RequestMapping("/open/register")

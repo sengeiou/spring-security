@@ -208,4 +208,13 @@ public class HdkGaoyong {
      * 是否包邮商品：1为是
      */
     private Integer is_shipping;
+
+    /**
+     * 定向计划佣金比例
+     */
+    private Double dx_rates;
+    /**
+     * 定向计划链接
+     */
+    private String tkurl;
 }

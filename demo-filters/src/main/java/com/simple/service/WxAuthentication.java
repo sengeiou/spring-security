@@ -22,11 +22,12 @@ import org.springframework.stereotype.Component;
  * @create: 2020-06-15 13:48
  **/
 @Slf4j
+@Component
 public class WxAuthentication extends AbstractUserDetailsAuthenticationProvider {
-
     @Autowired
     PasswordEncoder passwordEncoder;
-
+    @Autowired
+    LoadUserService loadUserService;
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
         log.info("wx 自定义的认证方式");
@@ -35,7 +36,6 @@ public class WxAuthentication extends AbstractUserDetailsAuthenticationProvider 
 
     @Override
     protected UserDetails retrieveUser(String s, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
-        String password = passwordEncoder.encode("1234567");
-        return new Person("calilonghao1234@foxmail.com",password,"ROLE_USER","ROLE_ADMIN");
+        return loadUserService.loadUserByUsername(s);
     }
 }

@@ -36,15 +36,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     LoadUserService loadUserService;
     @Autowired
     TokenFilter tokenFilter;
-
+    @Autowired
+    AppAuthentication appAuthentication;
+    @Autowired
+    WxAuthentication wxAuthentication;
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(new WxAuthentication());
-        auth.authenticationProvider(new AppAuthentication());
+        auth.authenticationProvider(wxAuthentication);
+        auth.authenticationProvider(appAuthentication);
     }
 
+
     @Bean
-    PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -71,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new NoLoginService("noLogin"))
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .mvcMatchers("/open/**").permitAll()

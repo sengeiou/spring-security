@@ -12,7 +12,6 @@ import lombok.ToString;
  **/
 @Setter
 @Getter
-
 public class HdkDouhuo {
     /**自增ID*/
     private Long product_id;

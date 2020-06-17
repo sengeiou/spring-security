@@ -1,6 +1,9 @@
 package com.simple.util;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Encoders;
+import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -13,12 +16,13 @@ import java.util.Date;
  * @description:
  * @create: 2020-06-16 13:27
  **/
+@Slf4j
 public final class Jwtutil {
 
-    private static final Long expire = 1000 * 60 * 60L;
-    private static final String secret = "1000*60*60L";
-    private static final String owner = "flutter";
-    private static final String dart = "flutter";
+    private static final Long expire = 3600000L;
+    private static final String secret = "myappsecret+++";
+    private static final String owner = "myapp";
+    private static final SecretKey secretKey = AesUtil.getSecretkey(secret,"HmacSHA256");
 
     /**
      * @exception:
@@ -30,9 +34,9 @@ public final class Jwtutil {
                 .setId(String.valueOf(id))
                 .setIssuer(username)
                 .setSubject(owner)
-                .setExpiration(new Date(expire))
+                .setExpiration(new Date(expire+System.currentTimeMillis()))
                 .setIssuedAt(new Date())
-                .signWith(getSign(), getKey());
+                .signWith(secretKey);
         return jwt.compact();
     }
 
@@ -41,33 +45,17 @@ public final class Jwtutil {
      * @DESP: 解析token
      * @Date: 2020/6/16 cai
      */
-    public static Claims parseToken() {
+    public static Claims parseToken(String token) {
         Jws<Claims> jws;
         try {
             jws = Jwts.parserBuilder()
-                    .setSigningKey(getKey())
+                    .setSigningKey(secretKey)
                     .build()
-                    .parseClaimsJws(dart);
+                    .parseClaimsJws(token);
         } catch (JwtException e) {
+            log.error("token解析错误:{}",e.getMessage());
             return null;
         }
         return jws.getBody();
-    }
-
-    /**
-     * 签名
-     */
-    public static SignatureAlgorithm getSign() {
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.ES256;
-        return signatureAlgorithm;
-    }
-
-    /**
-     * 密钥
-     */
-    public static SecretKey getKey() {
-        byte[] code = Base64.getDecoder().decode(secret);
-        SecretKey key = new SecretKeySpec(code, dart);
-        return key;
     }
 }

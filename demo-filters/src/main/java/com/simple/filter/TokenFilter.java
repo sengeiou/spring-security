@@ -1,8 +1,11 @@
 package com.simple.filter;
 
+import com.simple.dao.PersonRepository;
 import com.simple.pojo.Person;
 import com.simple.util.Jwtutil;
 import io.jsonwebtoken.Claims;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,18 +26,26 @@ import java.io.IOException;
  * @description:
  * @create: 2020-06-16 13:21
  **/
+@Slf4j
 @Order(0)
 @Component
 public class TokenFilter extends OncePerRequestFilter {
+    @Autowired
+    PersonRepository personRepository;
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+        log.info("token filter");
         String token = httpServletRequest.getHeader("token");
+        log.info("token={}",token);
         if (!(StringUtils.isEmpty(token))) {
-            Claims claims = Jwtutil.parseToken();
+            log.info("1");
+            Claims claims = Jwtutil.parseToken(token);
             if (claims != null) {
+                log.info("2");
                 String username = claims.getIssuer();
-                Person person = new Person(username, "", "ROLE_USER", "ROLE_ADMIN");
-                SecurityContextHolder.getContext().setAuthentication((Authentication) person);
+                Person person = personRepository.findPersonByEmail(username);
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username,"",person.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);

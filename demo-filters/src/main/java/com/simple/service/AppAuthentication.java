@@ -21,6 +21,7 @@ import javax.annotation.Resource;
  * @create: 2020-06-15 13:48
  **/
 @Slf4j
+@Component
 public class AppAuthentication extends AbstractUserDetailsAuthenticationProvider {
 
     @Autowired
@@ -31,7 +32,16 @@ public class AppAuthentication extends AbstractUserDetailsAuthenticationProvider
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
         log.info("邮件认证");
-
+        if (userDetails == null) {
+            throw new UsernameNotFoundException("认证失败");
+        }
+        String email = userDetails.getUsername();
+        String tempCode = (String) EmailUtil.codes.get(email);
+        String code = (String) usernamePasswordAuthenticationToken.getCredentials();
+        log.info("code:{}", code);
+//        if (!(code.equals(tempCode))) {
+//            throw new UsernameNotFoundException("认证失败");
+//        }
     }
 
     @Override
