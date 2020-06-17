@@ -3,11 +3,13 @@ POST http://localhost:34000/login
 Content-Type: application/x-www-form-urlencoded
 
 email=cailonghao1234@foxmail.com&password=123456
+
 ### Send POST request with body as parameters
 POST http://localhost:34000/login
 Content-Type: application/x-www-form-urlencoded
 
 email=cailonghao1234@foxmail.com&password=1234567
+
 ### Send POST request with body as parameters
 POST http://localhost:34000/user
 Content-Type: application/x-www-form-urlencoded
@@ -22,3 +24,26 @@ Content-Type: application/x-www-form-urlencoded
 POST http://localhost:34000/info
 Content-Type: application/x-www-form-urlencoded
 
+### Send POST request with body as parameters
+POST http://localhost:34000/logout
+Content-Type: application/x-www-form-urlencoded
+
+###-------------------------------------------------------------------------------------------
+### 发送邮件
+POST http://localhost:34000/open/sendEmail
+Content-Type: application/x-www-form-urlencoded
+
+email=cailonghao1234@foxmail.com
+### 注册
+POST http://localhost:34000/open/register
+Content-Type: application/x-www-form-urlencoded
+
+email=cailonghao1234@foxmail.com&password=123456&code=nlgazr
+### 登录
+POST http://localhost:34000/login
+Content-Type: application/x-www-form-urlencoded
+
+email=cailonghao1234@foxmail.com&password=123456&code=nlgazr
+### 验证token
+POST http://localhost:34000/open/sendEmail
+Content-Type: application/x-www-form-urlencoded

@@ -121,4 +121,16 @@ public class IndexController {
         map.put("uri",request.getRequestURI());
         return map;
     }
+    /**
+     * @exception:
+     * @DESP: 测试权限
+     * @Date: 2020/6/12 cai
+     */
+    @RequestMapping("/logout")
+    public Map<String,Object> logout(HttpServletRequest request){
+        Map<String,Object> map = new HashMap<>();
+        map.put("msg","info");
+        map.put("uri",request.getRequestURI());
+        return map;
+    }
 }
