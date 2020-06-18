@@ -39,9 +39,9 @@ public class AppAuthentication extends AbstractUserDetailsAuthenticationProvider
         String tempCode = (String) EmailUtil.codes.get(email);
         String code = (String) usernamePasswordAuthenticationToken.getCredentials();
         log.info("code:{}", code);
-        if (!(code.equals(tempCode))) {
-            throw new UsernameNotFoundException("认证失败");
-        }
+//        if (!(code.equals(tempCode))) {
+//            throw new UsernameNotFoundException("认证失败");
+//        }
     }
 
     @Override

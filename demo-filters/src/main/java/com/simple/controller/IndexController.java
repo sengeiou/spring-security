@@ -184,7 +184,7 @@ public class IndexController {
             String tempCode = (String) EmailUtil.codes.get(email);
             if (code.equals(tempCode)) {
                 String newPass = passwordEncoder.encode(password);
-                Person person = new Person(email, newPass, "ROLE_ADMIN","ROLE_USER");
+                Person person = new Person(email, newPass, "ROLE_ADMIN");
                 personRepository.save(person);
                 log.info("注册成功:{}", person);
                 map.put("msg", "创建成功");

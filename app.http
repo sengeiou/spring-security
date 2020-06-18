@@ -38,15 +38,12 @@ email=cailonghao1234@foxmail.com
 POST http://localhost:34000/open/register
 Content-Type: application/x-www-form-urlencoded
 
-email=cailonghao1234@foxmail.com&password=123456&code=bboqvg
-
-
-
-### 获取token
+email=cailonghao1234@foxmail.com&password=123456&code=nlgazr
+### 登录
 POST http://localhost:34000/login
 Content-Type: application/x-www-form-urlencoded
 
-email=cailonghao1234@foxmail.com&password=bboqvg
+email=cailonghao1234@foxmail.com&password=lntrvo
 
 > {% client.global.set("token", response.body.token); %}
 

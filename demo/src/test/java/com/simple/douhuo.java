@@ -2,6 +2,11 @@ package com.simple;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.simple.pojo.HdkDouhuo;
+import com.simple.pojo.HdkDouyin;
+import com.simple.pojo.HdkGaoyong;
+import com.simple.pojo.HdkWenhou;
+import com.simple.service.DouhuoService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
