@@ -40,9 +40,9 @@ public class Person implements UserDetails {
         List<GrantedAuthority> list = new ArrayList<>();
         String roles = "";
         for (int i = 0; i < args.length; i++) {
-            int finalI = i;
-            list.add((GrantedAuthority) () -> args[finalI]);
-            roles += args[finalI] + ",";
+            String role = args[i];
+            list.add((GrantedAuthority) () -> role);
+            roles += role + ",";
         }
         this.collection = list;
         this.roles = roles;
@@ -54,8 +54,8 @@ public class Person implements UserDetails {
             List<GrantedAuthority> list = new ArrayList<>();
             String[] rs = this.roles.split(",");
             for (int i = 0; i < rs.length; i++) {
-                int finalI = i;
-                list.add((GrantedAuthority) () -> rs[finalI]);
+                String role = rs[i];
+                list.add((GrantedAuthority) () -> role);
             }
             this.collection = list;
         }

@@ -36,12 +36,9 @@ public class TokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         log.info("token filter");
         String token = httpServletRequest.getHeader("token");
-        log.info("token={}",token);
         if (!(StringUtils.isEmpty(token))) {
-            log.info("1");
             Claims claims = Jwtutil.parseToken(token);
             if (claims != null) {
-                log.info("2");
                 String username = claims.getIssuer();
                 Person person = personRepository.findPersonByEmail(username);
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username,"",person.getAuthorities());
