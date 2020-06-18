@@ -20,5 +20,5 @@ spring:
   mail:
     host: smtp.qq.com
     username: cailonghao1234@foxmail.com
-    password: glwunnlbgtwddfdi
+    password: *
     port: 25
