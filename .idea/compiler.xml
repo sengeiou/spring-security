@@ -9,6 +9,7 @@
         <module name="demo-filters" />
         <module name="demo" />
         <module name="spring-securiy" />
+        <module name="demo-oauth2-server" />
       </profile>
     </annotationProcessing>
   </component>
@@ -16,6 +17,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="demo" options="-parameters" />
       <module name="demo-filters" options="-parameters" />
+      <module name="demo-oauth2-server" options="-parameters" />
       <module name="spring-securiy" options="-parameters" />
     </option>
   </component>
