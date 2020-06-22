@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint;
 
 /**
  * @author cainiao
@@ -16,11 +17,12 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
  * @create: 2020-06-19 13:38
  * http://localhost:50000/oauth/authorize?response_type=code&client_id=oauth2_client&scope=all&state=test&redirect_uri=http://example.com
  * localhost:50000/oauth/token?grant_type=authorization_code&code=qELGB5&redirect_uri=http://example.com
+ * AuthorizationEndpoint 配置认证请求
  **/
 @Configuration
 @EnableAuthorizationServer
 public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
-
+    AuthorizationEndpoint
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -39,5 +41,6 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager);
+        endpoints.authorizationCodeServices()
     }
 }
