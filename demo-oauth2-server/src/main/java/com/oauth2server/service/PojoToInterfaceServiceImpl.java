@@ -5,6 +5,7 @@ import com.oauth2server.pojo.Person;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -17,20 +18,30 @@ import java.util.Set;
  * @description:
  * @create: 2020-06-22 15:19
  **/
-public class PojoToInterfaceServiceImpl implements PojoToInterface{
+@Service
+public class PojoToInterfaceServiceImpl implements PojoToInterface {
     @Override
     public ClientDetails clientDetail(AuthClient client) {
-
         ClientDetails details = new ClientDetails() {
             @Override
             public String getClientId() {
-                return client.getCid().toString();
+                return client.getCid();
             }
 
             @Override
             public Set<String> getResourceIds() {
+                String resources = client.getResourceids();
                 Set<String> set = new HashSet<>();
-                //set.add()
+                if (resources != null) {
+                    if (resources.contains(",")) {
+                        String[] str = resources.split(",");
+                        for (int i = 0; i < str.length; i++) {
+                            set.add(str[i]);
+                        }
+                    } else {
+                        set.add(resources);
+                    }
+                }
                 return null;
             }
 
@@ -41,27 +52,54 @@ public class PojoToInterfaceServiceImpl implements PojoToInterface{
 
             @Override
             public String getClientSecret() {
-                return null;
+                return client.getAppSecret();
             }
 
             @Override
             public boolean isScoped() {
-                return false;
+                return true;
             }
 
             @Override
             public Set<String> getScope() {
+                String resources = client.getScope();
+                Set<String> set = new HashSet<>();
+                if (resources != null) {
+                    if (resources.contains(",")) {
+                        String[] str = resources.split(",");
+                        for (int i = 0; i < str.length; i++) {
+                            set.add(str[i]);
+                        }
+                    } else {
+                        set.add(resources);
+                    }
+                }
                 return null;
             }
 
             @Override
             public Set<String> getAuthorizedGrantTypes() {
+                String resources = client.getGrantTypes();
+                Set<String> set = new HashSet<>();
+                if (resources != null) {
+                    if (resources.contains(",")) {
+                        String[] str = resources.split(",");
+                        for (int i = 0; i < str.length; i++) {
+                            set.add(str[i]);
+                        }
+                    } else {
+                        set.add(resources);
+                    }
+                    return set;
+                }
                 return null;
             }
 
             @Override
             public Set<String> getRegisteredRedirectUri() {
-                return null;
+                Set<String> set = new HashSet<>();
+                set.add(client.getRedirectUrl());
+                return set;
             }
 
             @Override

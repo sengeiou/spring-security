@@ -1,12 +1,12 @@
 package com.oauth2server.Dao;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.security.oauth2.provider.ClientDetails;
+import com.oauth2server.pojo.AuthClient;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AuthClientRepository {
-    /**cid查询client*/
-    @Query(value = "", nativeQuery = true)
-    ClientDetails selectClient(Long cid);
+public interface AuthClientRepository extends JpaRepository<AuthClient, Long> {
+
+
+    AuthClient findByCid(String cid);
 }
