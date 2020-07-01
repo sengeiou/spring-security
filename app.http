@@ -56,7 +56,7 @@ token:{{token}}
 ### oauth2 token
 POST http://localhost:50000/oauth/token
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic oauth2_client 123
+Authorization: Basic quan sanquan
 
-grant_type=authorization_code&redirect_uri=http://example.com&code=qELGB5
+grant_type=authorization_code&redirect_uri=http://example.com&code=pMU1Hq
 

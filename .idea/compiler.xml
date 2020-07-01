@@ -9,9 +9,11 @@
         <module name="demo-filters" />
         <module name="demo" />
         <module name="spring-securiy" />
-        <module name="demo-oauth2-server" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="demo-oauth2-server" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
